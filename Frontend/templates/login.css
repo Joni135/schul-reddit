@@ -1,0 +1,12 @@
+body {
+    background-image: url('./img/mountains.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+.image-credit {
+    position: absolute;
+    bottom: 0;
+    color: #999999;
+}
