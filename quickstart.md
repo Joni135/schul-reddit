@@ -6,7 +6,7 @@ den Discord-Channel gepostet.
 
 Dann starten wir ein neues Projekt:
 
-    django-admin startproject schulReddit
+    django-admin startproject tutorial
 
 Danach sollte die directory structure so aussehen:
 
@@ -76,6 +76,12 @@ die im Folgenden die HTTP-Requests auffangen und an die richtige Stelle leiten.
 
 __tutorial/urls.py__
 
+    from django.urls import include
+    from django.conf import settings
+    from django.conf.urls.static import static
+    from django.views.generic import RedirectView
+
+
     urlpatterns = [
         path('admin/', admin.site.urls),
         path('bulletinBoard/', include('bulletinBoard.urls')), # die URL für die App
@@ -83,15 +89,25 @@ __tutorial/urls.py__
     
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # das hier ist für
                                                                     # static files
+Wir verweisen hier bei der zweiten path-Funktion auf **bulletinBoard.urls**.
+Da es die Datei noch nicht gibt, müssen wir diese erstellen.
 
-Dann wenden wir uns den models zu. Wie ich ja schon in der Video-Session
-erzählt habe, sind models sozusagen das Datenbank-Mapping, also so eine
+    from django.urls import path
+    from . import views
+
+    urlpatterns = [
+            #path('', views.index, name='index'),
+        ]
+
+
+Dann wenden wir uns den __models__ zu. Wie ich ja schon in der Video-Session
+erzählt habe, sind __models__ sozusagen das *Datenbank-Mapping*, also so eine
 Art Schnittstelle zwischen django und der jeweils verwendeten Datenbank.
 
 Dort definieren wir die Einträge, die django dann in die Datenbank schreiben
 können soll.
 
-Das hier ist jetzt ein template für ein durchschnittliches model:
+Das hier ist jetzt ein **template** für ein durchschnittliches model:
 
 __bulletinBoard/models.py__
 
@@ -168,11 +184,10 @@ registrieren:
 
 __bulletinBoard/admin.py__
 
-    from . models import User, Post
+    from .models import User, Post
 
     admin.site.register(User)
     admin.site.register(Post)
-    admin.site.register(Comment)
 
 Danach sollten wir einen Administrator-Account generieren:
 
@@ -193,14 +208,6 @@ dass jeder Post einen User hat, und ein User viele Posts haben kann.
 Jetzt kommt der spannende Part. Jetzt holen wir nämlich mithilfe von django 
 wieder Einträge aus der Datenbank heraus und geben sie in unsere Website aus.
 
-Wir benötigen jetzt eine zweite urls.py in unserem bulletinBoard directory, also
-einfach erstellen und dann routen:
-
-__bulletinBoard/urls.py__
-
-    urlpatterns = [
-        path('', views.index, name='index'), 
-    ]
 
 Jetzt schreiben wir die erste view, also die Datei, die den ganzen Python Code enthält,
 der später für die Funktionalität der Website sorgen wird.
@@ -208,8 +215,7 @@ der später für die Funktionalität der Website sorgen wird.
 __bulletinBoard/views.py__
 
     from django.shortcuts import render, get_object_or_404
-    from bulletinBoard.models import User, Post, Comment
-    from .forms import CommentForm
+    from bulletinBoard.models import User, Post
     
     def index(request): # Diese Funktion ist die index view, also sozusagen der Code für die
                         # Homepage
@@ -317,6 +323,12 @@ __tutorial/settings.py__
     'DIRS': [
         os.path.join(BASE_DIR, 'templates'),
     ]
+
+Jetzt müssen wir noch einen Kommentar in der app-spezifischen __urls.py__ unkommentieren.
+
+__bulletinBoard/urls.py__
+
+    # löschen 
 
 Wenn ihr jetzt den wieder den development server startet, 
 solltet ihr sehen, wie die von euch eingetragenen Daten auf
