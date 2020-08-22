@@ -1,6 +1,6 @@
 {% extends "bulletinBoard/base_generic.html" %}
 
-{% block title %}Create an Account{% endblock%}
+
 {% load crispy_forms_tags %}
 
 {% block content%}
@@ -9,4 +9,11 @@
         {{ form|crispy }}
         <button type="submit" class="btn btn-success">Register</button>
     </form>
+
+    <p>Already have an account? Login <a href="/login">here!</a></p>
+    <!-- Image-Credit -->
+    <div class="image-credit">
+        <p>Image Credit: <a href="https://pixabay.com">Pixabay</a></p>
+    </div>
+    <br>
 {% endblock %}

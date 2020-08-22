@@ -20,7 +20,7 @@ class newPostForm(forms.ModelForm):
             'title' : forms.TextInput(
         attrs={
             'class' : 'form-control',
-            'placeholder' : 'Enter Post!',
+            'placeholder' : 'Enter Title!',
             'aria-label' : 'Post',
             'aria-describedby' : 'add-btn', 
         }
