@@ -18,10 +18,13 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
+from register import views as v
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('bulletinBoard/', include('bulletinBoard.urls')),
+    path('register/', v.register, name='register'),
     path('', RedirectView.as_view(url='bulletinBoard/', permanent=True)),
+    path('', include('django.contrib.auth.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

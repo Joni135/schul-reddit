@@ -21,7 +21,7 @@ def index(request):
         
     }
 
-    return render(request, 'index.html', context=context)
+    return render(request, 'bulletinBoard/index.html', context=context)
 
 @require_POST
 def addPost(request):
