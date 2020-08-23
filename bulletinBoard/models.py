@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class MyModelName(models.Model):
@@ -22,20 +22,20 @@ class MyModelName(models.Model):
         """String for representing the MyModelName object (in Admin site etc.)."""
         return self.my_field_name
 
-class User(models.Model):
-    
-    last_name = models.CharField(max_length = 666, help_text = "Last name of user")
-    first_name = models.CharField(max_length = 1000, help_text = "First name of user")
-    ordering = ['last_name', 'first_name']
+#class User(models.Model):
+#    
+#    last_name = models.CharField(max_length = 666, help_text = "Last name of user")
+#    first_name = models.CharField(max_length = 1000, help_text = "First name of user")
+#    ordering = ['last_name', 'first_name']
 
-    def __str__(self):
-        return "{0} {1}".format(self.first_name, self.last_name)
+#    def __str__(self):
+#        return "{0} {1}".format(self.first_name, self.last_name)
 
 class Post(models.Model):
 
     title = models.CharField(max_length = 80, help_text = "Title of post")
     content = models.TextField(max_length = 8000, help_text = "Content of post")
-    author = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return "{0} {1} {2}".format(self.title, self.content, self.author)

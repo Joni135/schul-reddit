@@ -24,7 +24,7 @@ class newPostForm(forms.ModelForm):
             'aria-label' : 'Post',
             'aria-describedby' : 'add-btn', 
         }
-            ), 
+            ),
             'content' : forms.TextInput(
         attrs={
             'class' : 'form-control',

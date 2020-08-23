@@ -5,8 +5,11 @@
 
 {% block content %}
   <h1>schulReddit</h1>
-  <p>Welcome to schulReddit, a website developed by <em>HTTF</em>!</p>
-  
+  {% if user.is_authenticated %}
+    <p> Welcome, {{ user.username }}. This is schulReddit, a webiste developed by <em>HTTF</em>.</p>
+  {% else %}
+    <p>Welcome to schulReddit, a website developed by <em>HTTF</em>! Please register or login.</p>
+  {% endif %}
   <form action="{% url 'add' %}" method="POST" role="form">
     {% csrf_token %}
     <div class="form-group">
@@ -15,7 +18,7 @@
         {{ form.title }}
         {{ form.content }}
         <span class="input-group-btn">
-          <button type="submit" class="btn btn-default" id="add-btn">Submit</button>
+          <button type="submit" class="btn btn-success" id="add-btn">Submit</button>
         </span>
       </div>
     </div>
